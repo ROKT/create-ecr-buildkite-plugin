@@ -109,5 +109,5 @@ if [[ -z ${BUILDKITE_PLUGIN_CREATE_ECR_NAME:-} ]]; then
 fi
 
 repository_name="${BUILDKITE_PLUGIN_CREATE_ECR_NAME}"
-regions="${BUILDKITE_PLUGIN_CREATE_ECR_REGIONS}"
+regions="${BUILDKITE_PLUGIN_CREATE_ECR_REGIONS-}"
 upsert_to_regional_ecr "${repository_name}" "${regions}"
