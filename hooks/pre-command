@@ -57,7 +57,7 @@ upsert_ecr() {
     echo '--- Getting ECR repository Arn'
     get_repository_arn "${repository_name}" "${region}"
     echo "Repository Arn: ${repository_arn}"
-    aws ecr tag-resource --resource-arn "${repository_arn}" --tags "file://${repository_tags_file}"  
+    aws ecr tag-resource --resource-arn "${repository_arn}" --tags "file://${repository_tags_file}" --region "${region}" 
   fi
 
   if [[ "${BUILDKITE_PLUGIN_CREATE_ECR_SCAN_ON_PUSH:-}" =~ ^(true|on|1)$ ]]; then
@@ -89,7 +89,7 @@ upsert_to_regional_ecr() {
   then
     echo "--- No regions mentioned. Getting current region"
     get_current_region
-    echo "-- Current region : ${fallback_region}"
+    echo "--- Current region : ${fallback_region}"
     upsert_ecr "${repository_name}" "${fallback_region}"
   else
     # run a loop for each region mentioned in the list
