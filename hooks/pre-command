@@ -57,9 +57,7 @@ upsert_ecr() {
     echo '--- Getting ECR repository Arn'
     get_repository_arn "${repository_name}" "${region}"
     echo "Repository Arn: ${repository_arn}"
-    aws ecr tag-resource \        
-      --resource-arn "${repository_arn}" \
-      --tags "file://${repository_tags_file}"
+    aws ecr tag-resource --resource-arn "${repository_arn}" --tags "file://${repository_tags_file}"  
   fi
 
   if [[ "${BUILDKITE_PLUGIN_CREATE_ECR_SCAN_ON_PUSH:-}" =~ ^(true|on|1)$ ]]; then
