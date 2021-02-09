@@ -82,7 +82,7 @@ upsert_to_regional_ecr() {
   shift
   local regions=("$@")
   # run a loop for each region mentioned in the list
-  for region in "${regions[@]}" do
+  for region in "${regions[@]}"; do
     echo "--- Current region => ${region}"
     upsert_ecr "${repository_name}" "${region}"
   done
