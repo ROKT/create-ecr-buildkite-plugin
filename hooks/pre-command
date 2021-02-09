@@ -59,7 +59,6 @@ upsert_ecr() {
     echo "Repository Arn: ${repository_arn}"
     aws ecr tag-resource \        
       --resource-arn "${repository_arn}" \
-      --region "$region" \
       --tags "file://${repository_tags_file}"
   fi
 
