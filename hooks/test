@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+regions=()
+while IFS='=' read -r region _ ; do
+  if [[ $region =~ ^(BUILDKITE_PLUGIN_CREATE_ECR_REGIONS_[0-9]+) ]]; then
+    MULTIPLE_UPLOADS="true"
+    regions+=("${!region}")
+  fi
+done < <(env | sort)
+
+for region in ${regions[@]}; do
+  echo $region
+done
