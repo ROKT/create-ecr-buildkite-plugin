@@ -87,7 +87,7 @@ upsert_to_regional_ecr() {
 
   if [ -z "$regions"]
   then
-    echo "--- No regions mentioned. Getting current region from"
+    echo "--- No regions mentioned. Getting current region"
     get_current_region
     echo "-- Current region : ${fallback_region}"
     upsert_ecr "${repository_name}" "${fallback_region}"
