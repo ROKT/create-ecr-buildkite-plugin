@@ -55,7 +55,9 @@ steps:
     plugins:
       - seek-oss/create-ecr#v1.3.0:
           name: my-repo
-          regions: us-west-2;ap-southeast-2
+          regions: 
+            - us-west-2
+            - ap-southeast-2
 ```
 
 ## Configuration
@@ -81,7 +83,7 @@ steps:
 
   Path in local repository to the ecr repository tags file.
 
-- `regions` (optional, string, ; separated list of regions)
+- `regions` (optional, array of strings)
 
   Regions to push the images to. If not mentioned, current region is pulled from runtime config.
 
