@@ -70,6 +70,9 @@ steps:
   Whether to [automatically scan images](https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html#scanning-repository) pushed to the ECR repository for vulnerabilities.
   Omitting this option will leave the existing image scanning configuration untouched.
 
+- `image-tag-mutability` (optional, string: `MUTABLE` or `IMMUTABLE`)
+
+  Sets the repository's tag mutability on every build that manages the repository. Unset leaves the repository as it is (a new repository is `MUTABLE`). `IMMUTABLE` makes tags write-once: a retried or rebuilt build that pushes a tag which already exists fails at the push instead of replacing the image a deployment may be pinned to, so pipelines that set it should tag images uniquely (a commit sha, a build number) and never re-push a moving tag such as `latest`.
 - `repository-policy` (optional, string)
 
   Path in local repository to the repository policy file.

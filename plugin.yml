@@ -11,6 +11,9 @@ configuration:
       type: string
     scan-on-push:
       type: boolean
+    image-tag-mutability:
+      type: string
+      enum: ['MUTABLE', 'IMMUTABLE']
     repository-policy:
       type: string
     repository-tags-file:

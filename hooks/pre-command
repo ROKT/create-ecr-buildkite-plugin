@@ -75,6 +75,26 @@ upsert_ecr() {
       --image-scanning-configuration \
       scanOnPush=false
   fi
+
+  # Optional: image tag mutability. Unset leaves the repository as it is (ECR's default for a new repository is
+  # MUTABLE); IMMUTABLE makes every tag write-once, so a build that re-pushes an existing tag fails instead of
+  # silently replacing the image a deployment may already be pinned to.
+  image_tag_mutability="${BUILDKITE_PLUGIN_CREATE_ECR_IMAGE_TAG_MUTABILITY:-}"
+  if [[ ${image_tag_mutability} != '' ]]; then
+    case "${image_tag_mutability}" in
+      MUTABLE|IMMUTABLE) ;;
+      *)
+        echo "^^^ +++"
+        echo "image-tag-mutability must be MUTABLE or IMMUTABLE (got '${image_tag_mutability}')"
+        exit 1
+        ;;
+    esac
+    echo "--- [${region}] Setting ECR image tag mutability to ${image_tag_mutability}"
+    aws ecr put-image-tag-mutability \
+      --repository-name "${repository_name}" \
+      --region "${region}" \
+      --image-tag-mutability "${image_tag_mutability}"
+  fi
 }
 
 upsert_to_regional_ecr() {
